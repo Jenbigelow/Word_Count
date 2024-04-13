@@ -3,17 +3,14 @@
 def counts_words(file):
     the_file = open(file)
     word_count = {}
-    non_alpha_chars = [',','?','*','.','[',']','"','(',')','!']
+
     for line in the_file:
         words = line.rstrip().split(" ")
         for word in words:
-            for letter in word:
-                if letter in non_alpha_chars:
-                    del letter
-                    if word.isalpha():
-                        word = word.lower()
+            word = remove_special_characters(word)
+            word = word.lower()
                 #  if the word only contains alphabetical characters
-                        word_count[word] = word_count.get(word, 0) + 1
+            word_count[word] = word_count.get(word, 0) + 1
                 #  Add the word and its count to dictionary
 
 
@@ -21,6 +18,14 @@ def counts_words(file):
     return word_count
 
     
+def remove_special_characters(word):
+    non_alpha_chars = [',','?','*','.','[',']','"','(',')','!']
+    for letter in word:
+        if letter in non_alpha_chars:
+            word = word.replace(letter, '')
+    print(word)
+    return word
+
 
 counts_words("test.txt")
 # counts_words("twain.txt")
